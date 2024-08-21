@@ -1,20 +1,17 @@
 "use client";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 
-export default function Search() {
+export default function Search({ placeholder }) {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
 
-  const placeholder = "Search invoices...";
-
   const handleSearch = useDebouncedCallback((term) => {
-    console.log(`Searching... ${term}`);
     const params = new URLSearchParams(searchParams);
-    params.set("page", "1");
+    params.set("page", "1"); // Reset to first page on new search
     if (term) {
       params.set("query", term);
     } else {
@@ -22,7 +19,7 @@ export default function Search() {
     }
     replace(`${pathname}?${params.toString()}`);
   }, 300);
-  
+
   return (
     <div className="relative flex flex-1 flex-shrink-0">
       <label htmlFor="search" className="sr-only">

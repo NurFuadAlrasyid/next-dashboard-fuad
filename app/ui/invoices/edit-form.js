@@ -1,17 +1,20 @@
-'use client';
+"use client";
 
 import {
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
   UserCircleIcon,
-} from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import { Button } from '@/app/ui/button';
+} from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { Button } from "@/app/ui/button";
+import { updateInvoice } from "@/app/lib/actions";
 
 export default function EditInvoiceForm({ invoice, customers }) {
+  const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
   return (
-    <form>
+    <form action={updateInvoiceWithId}>
+      <input type="hidden" name="id" value={invoice.id} />
       <div className="p-4 rounded-md bg-gray-50 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -72,7 +75,7 @@ export default function EditInvoiceForm({ invoice, customers }) {
                   name="status"
                   type="radio"
                   value="pending"
-                  defaultChecked={invoice.status === 'pending'}
+                  defaultChecked={invoice.status === "pending"}
                   className="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 cursor-pointer focus:ring-2"
                 />
                 <label
@@ -88,7 +91,7 @@ export default function EditInvoiceForm({ invoice, customers }) {
                   name="status"
                   type="radio"
                   value="paid"
-                  defaultChecked={invoice.status === 'paid'}
+                  defaultChecked={invoice.status === "paid"}
                   className="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 cursor-pointer focus:ring-2"
                 />
                 <label
